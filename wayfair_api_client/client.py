@@ -6,7 +6,8 @@ from gql.transport.requests import RequestsHTTPTransport
 import six
 
 from . import (
-    utils
+    utils,
+    queries
 )
 
 class WayfairAPICLient:
@@ -14,11 +15,12 @@ class WayfairAPICLient:
     SANDBOX_BASE_URL = 'https://sandbox.api.wayfair.com'
     AUTH_URL = 'https://sso.auth.wayfair.com/oauth/token'
 
-    def __init__(self, client_id, client_secret, sandbox=False):
+    def __init__(self, client_id, client_secret, queries=queries.Queries, sandbox=False):
         self._session = rq.Session()
         self._sandbox = sandbox
         self._client_id = client_id
         self._client_secret = client_secret
+        self._queries = queries
 
         self._authtenticate()
         self._init_gql_client()
@@ -31,11 +33,6 @@ class WayfairAPICLient:
             'gql': utils.urljoin(api_base_url, 'v1/graphql'),
         }
         return endpoints
-
-    def execute(self, query):
-        if isinstance(query, six.string_types):
-            query = gql(query)
-        return self._gql_client.execute(query)
 
     def _init_gql_client(self):
         session_auth_header_value = self._session.headers.get('Authorization')
@@ -65,3 +62,18 @@ class WayfairAPICLient:
         }
         self._session.headers.update(auth_headers)
         return res.json()
+
+    def execute(self, query, params=None):
+        if isinstance(query, six.string_types):
+            query = gql(query)
+        return self._gql_client.execute(query, params)
+
+    def fetch_purchase_order_list(self, limit=100):
+        params = {'limit': limit}
+        res = self.execute(self._queries.purchase_order_list_query, params=params)
+        return res.get('purchaseOrders', [])
+    
+    def fetch_purchase_order(self, poNumber):
+        params = {'poNumber': poNumber}
+        res = self.execute(self._queries.purchase_order_query, params=params)
+        return res.get('purchaseOrders', [])

@@ -1,0 +1,1 @@
+# Wayfair API Client - A simple api client for Wayfair suppliers
