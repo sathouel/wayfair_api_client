@@ -59,3 +59,39 @@ class Queries:
             ) %s
         }
     ''' % purchase_order_fields
+
+    accept_purchase_order_mutation = '''
+    mutation acceptOrder($poNumber: String!, $shipSpeed: ShipSpeed!, $lineItems: [AcceptedLineItemInput!]!) {
+        purchaseOrders {
+            accept(
+                poNumber: $poNumber,
+                shipSpeed: $shipSpeed,
+                lineItems: $lineItems
+            ) {
+                id,
+                handle,
+                status,
+                submittedAt,
+                completedAt
+            }
+        }
+    }    
+    '''
+
+    inventory_mutation = """
+    mutation save($inventory: [inventoryInput]!, $feed_kind: inventoryFeedKind!, $dry_run: Boolean!) {
+        inventory {
+            save(
+                inventory: $inventory,
+                feedKind: $feed_kind,
+                dryRun: $dry_run
+            ) {
+                id,
+                handle,
+                status,
+                submittedAt,
+                completedAt
+            }
+        }
+    }
+    """    
