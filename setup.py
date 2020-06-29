@@ -5,13 +5,13 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="wayfair-api-client",
-    version="0.0.1",
+    version="0.0.2",
     author="Steven Athouel",
     author_email="sathouel@gmail.com",
     description="A simple api client for Wayfair suppliers",
     long_description=long_description,
     long_description_content_type="text/markdown",
-    url="https://github.com/sathouel/wayfai_api_client",
+    url="https://github.com/sathouel/wayfair_api_client",
     packages=setuptools.find_packages(),
     classifiers=[
         "Programming Language :: Python :: 3",
