@@ -109,7 +109,7 @@ class WayfairAPICLient:
             params.update({'warehouseId': warehouse_id})
         if request_for_pickup_date:
             params.update({'requestForPickupDate': request_for_pickup_date})
-        res = self.execute(self._queries.accept_purchase_order_mutation, params={'params': params})
+        res = self.execute(self._queries.register_purchase_order, params={'params': params})
         return res
 
     def accept_purchase_order(self, po_number, line_items, ship_speed='GROUND'):
