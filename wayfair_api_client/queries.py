@@ -78,6 +78,38 @@ class Queries:
     }    
     '''
 
+    register_purchase_order = '''
+    mutation register($params: RegistrationInput!) {
+        purchaseOrders {
+            register(
+                registrationInput: $params
+            ) {
+                id,
+                eventDate,
+                pickupDate,
+                poNumber
+                consolidatedShippingLabel {
+                    url
+                }
+                billOfLading {
+                    url
+                }
+                generatedShippingLabels {
+                    poNumber
+                    fullPoNumber
+                    carrier
+                    carrierCode
+                    trackingNumber
+                }
+                customsDocument {
+                    required
+                    url
+                }
+            }
+        }
+    }    
+    '''
+
     inventory_mutation = """
     mutation save($inventory: [inventoryInput]!, $feed_kind: inventoryFeedKind!, $dry_run: Boolean!) {
         inventory {

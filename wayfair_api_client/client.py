@@ -90,6 +90,28 @@ class WayfairAPICLient:
         res = self._session.get(url)
         return res
 
+    def register_purchase_order(self, po_number, warehouse_id=None, request_for_pickup_date=None):
+        '''
+        https://developer.wayfair.com/docs/?python#register-mutation
+        "variables": {
+            "params":  
+            {  
+            "poNumber": "CS1234567",  
+            "warehouseId": "5000",
+            "requestForPickupDate": "2019-03-26 15:30:00"              
+            }  
+        }        
+        '''
+        params = {
+            'poNumber': po_number
+        }
+        if warehouse_id:
+            params.update({'warehouseId': warehouse_id})
+        if request_for_pickup_date:
+            params.update({'requestForPickupDate': request_for_pickup_date})
+        res = self.execute(self._queries.accept_purchase_order_mutation, params={'params': params})
+        return res
+
     def accept_purchase_order(self, po_number, line_items, ship_speed='GROUND'):
         '''
         https://developer.wayfair.com/docs/?php#accept-order-mutation
