@@ -61,11 +61,12 @@ class Queries:
     ''' % purchase_order_fields
 
     accept_purchase_order_mutation = '''
-    mutation acceptOrder($poNumber: String!, $shipSpeed: ShipSpeed!, $lineItems: [AcceptedLineItemInput!]!) {
+    mutation acceptOrder($poNumber: String!, $shipSpeed: ShipSpeed!, $dryRun: Boolean!, $lineItems: [AcceptedLineItemInput!]!) {
         purchaseOrders {
             accept(
                 poNumber: $poNumber,
                 shipSpeed: $shipSpeed,
+                dryRun: $dryRun,
                 lineItems: $lineItems
             ) {
                 id,

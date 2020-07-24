@@ -112,7 +112,7 @@ class WayfairAPICLient:
         res = self.execute(self._queries.register_purchase_order, params={'params': params})
         return res
 
-    def accept_purchase_order(self, po_number, line_items, ship_speed='GROUND'):
+    def accept_purchase_order(self, po_number, line_items, ship_speed='GROUND', dry_run=False):
         '''
         https://developer.wayfair.com/docs/?php#accept-order-mutation
             "poNumber": "CS12345678",
@@ -132,7 +132,7 @@ class WayfairAPICLient:
             }
         ]        
         '''
-        params = {'poNumber': po_number, 'lineItems': line_items, 'shipSpeed': ship_speed}
+        params = {'poNumber': po_number, 'lineItems': line_items, 'shipSpeed': ship_speed, 'dryRun': dry_run}
         res = self.execute(self._queries.accept_purchase_order_mutation, params=params)
         return res
 
