@@ -5,7 +5,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="wayfair-api-client",
-    version="0.0.7",
+    version="0.0.8",
     author="Steven Athouel",
     author_email="sathouel@gmail.com",
     description="A simple api client for Wayfair suppliers",
