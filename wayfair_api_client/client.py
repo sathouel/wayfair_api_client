@@ -65,10 +65,21 @@ class WayfairAPICLient:
         self._session.headers.update(auth_headers)
         return res.json()
 
-    def execute(self, query, params=None):
+    def old_execute(self, query, params=None):
         if isinstance(query, six.string_types):
             query = gql(query)
         return self._gql_client.execute(query, params)
+
+    def execute(self, query, params=None, mutation=False):
+        data = {}
+        if mutation:
+            data['mutation'] = query
+        else:
+            data['query'] = query
+        if params:
+            data['variables'] = params
+        res = self._session.post(self.endpoints.get('gql'), data=json.dumps(data))
+        return res.json()
 
     def fetch_purchase_order_list(self, limit=100):
         params = {'limit': limit}
