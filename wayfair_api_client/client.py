@@ -78,8 +78,8 @@ class WayfairAPICLient:
             data['query'] = query
         if params:
             data['variables'] = params
-        res = self._session.post(self.endpoints.get('gql'), data=json.dumps(data))
-        return res.json()
+        res = self._session.post(self.endpoints['gql'], data=json.dumps(data))
+        return res.json().get('data')
 
     def fetch_purchase_order_list(self, limit=100):
         params = {'limit': limit}
