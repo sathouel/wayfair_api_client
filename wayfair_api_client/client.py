@@ -78,6 +78,7 @@ class WayfairAPICLient:
             data['query'] = query
         if params:
             data['variables'] = params
+        print(data)
         res = self._session.post(self.endpoints['gql'], data=json.dumps(data))
         return res.json().get('data', {})
 
