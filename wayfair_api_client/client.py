@@ -63,7 +63,7 @@ class WayfairAPICLient:
             'Content-Type': 'application/json',
         }
         self._session.headers.update(auth_headers)
-        return res.json()
+        return res
 
     def old_execute(self, query, params=None):
         if isinstance(query, six.string_types):
@@ -80,19 +80,17 @@ class WayfairAPICLient:
             data['variables'] = params
         print(data)
         res = self._session.post(self.endpoints['gql'], data=json.dumps(data))
-        return res.json().get('data', {})
+        return res
 
     def fetch_purchase_order_list(self, limit=100):
         params = {'limit': limit}
         res = self.execute(self._queries.purchase_order_list_query, params=params)
-        # return res
-        return res.get('purchaseOrders', [])
+        return res
     
     def fetch_purchase_order(self, po_number):
         params = {'poNumber': po_number}
         res = self.execute(self._queries.purchase_order_query, params=params)
-        # return res
-        return res.get('purchaseOrders', [])
+        return res
 
     def fetch_packing_slip(self, po_number):
         url = utils.urljoin(self.endpoints.get('packing_slip'), po_number)
@@ -169,4 +167,4 @@ class WayfairAPICLient:
         '''
         params = {'inventory': inventory, 'feed_kind': feed_kind, 'dry_run': dry_run}
         res = self.execute(self._queries.inventory_mutation, params=params)
-        return res.get('inventory', [])
+        return res
