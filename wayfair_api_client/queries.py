@@ -43,6 +43,19 @@ class Queries:
         }
     ''' % purchase_order_fields
 
+    last_purchase_order_list_query = '''
+        query purchaseOrders($limit: Int!) {
+            purchaseOrders(
+                limit: $limit,
+                ordering: [
+                    {
+                        desc: "poDate"
+                    }
+                ]            
+            ) %s
+        }
+    ''' % purchase_order_fields    
+
     purchase_order_query = '''
         query purchaseOrders($poNumber: String!) {
             purchaseOrders(

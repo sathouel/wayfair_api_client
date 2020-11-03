@@ -86,6 +86,11 @@ class WayfairAPICLient:
         params = {'limit': limit}
         res = self.execute(self._queries.purchase_order_list_query, params=params)
         return res
+
+    def fetch_last_purchase_order_list(self, limit=100):
+        params = {'limit': limit}
+        res = self.execute(self._queries.last_purchase_order_list_query, params=params)
+        return res
     
     def fetch_purchase_order(self, po_number):
         params = {'poNumber': po_number}
